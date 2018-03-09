@@ -127,28 +127,6 @@ func StartSpan(ctx context.Context, name string) (context.Context, *Span) {
 	return WithSpan(ctx, span), span
 }
 
-// StartSpanWithOptions starts a new child span of the current span in the context.
-//
-// If there is no span in the context, creates a new trace and span.
-//
-// Deprecated: Use StartSpan(...), or WithSpan(ctx, NewSpan(...)).
-func StartSpanWithOptions(ctx context.Context, name string, o StartOptions) (context.Context, *Span) {
-	parentSpan, _ := ctx.Value(contextKey{}).(*Span)
-	span := NewSpan(name, parentSpan, o)
-	return WithSpan(ctx, span), span
-}
-
-// StartSpanWithRemoteParent starts a new child span with the given parent SpanContext.
-//
-// If there is an existing span in ctx, it is ignored -- the returned Span is a
-// child of the span specified by parent.
-//
-// Deprecated: Use WithSpan(ctx, NewSpanWithRemoteParent(...)).
-func StartSpanWithRemoteParent(ctx context.Context, name string, parent SpanContext, o StartOptions) (context.Context, *Span) {
-	span := NewSpanWithRemoteParent(name, parent, o)
-	return WithSpan(ctx, span), span
-}
-
 // NewSpan returns a new span.
 //
 // If parent is not nil, created span will be a child of the parent.
@@ -228,7 +206,7 @@ func (s *Span) End() {
 	s.exportOnce.Do(func() {
 		// TODO: optimize to avoid this call if sd won't be used.
 		sd := s.makeSpanData()
-		sd.EndTime = sd.StartTime.Add(time.Since(sd.StartTime))
+		sd.EndTime = internal.MonotonicEndTime(sd.StartTime)
 		if s.spanStore != nil {
 			s.spanStore.finished(s, sd)
 		}
