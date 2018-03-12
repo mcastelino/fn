@@ -2,6 +2,12 @@
 
 
 [[projects]]
+  name = "git.apache.org/thrift.git"
+  packages = ["lib/go/thrift"]
+  revision = "327ebb6c2b6df8bf075da02ef45a2a034e9b79ba"
+  version = "0.11.0"
+
+[[projects]]
   branch = "master"
   name = "github.com/Azure/go-ansiterm"
   packages = [
@@ -534,6 +540,8 @@
   branch = "master"
   name = "go.opencensus.io"
   packages = [
+    "exporter/jaeger",
+    "exporter/jaeger/internal/gen-go/jaeger",
     "exporter/prometheus",
     "exporter/zipkin",
     "internal",
@@ -572,6 +580,12 @@
 
 [[projects]]
   branch = "master"
+  name = "golang.org/x/sync"
+  packages = ["semaphore"]
+  revision = "fd80eb99c8f653c847d294a001bdf2a3a6f768f5"
+
+[[projects]]
+  branch = "master"
   name = "golang.org/x/sys"
   packages = [
     "unix",
@@ -600,6 +614,12 @@
   ]
   revision = "f21a4dfb5e38f5895301dc265a8def02365cc3d0"
   version = "v0.3.0"
+
+[[projects]]
+  branch = "master"
+  name = "google.golang.org/api"
+  packages = ["support/bundler"]
+  revision = "fd84a7d742f699417e6d39a933a987ff2386c99c"
 
 [[projects]]
   branch = "master"
@@ -661,6 +681,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "1818456581749a8ec46a6fded1c10e7f706f9e77aa1ac2061d25c3080883376d"
+  inputs-digest = "724aa714bddf85b89daf865c3e83c69854beb6c5baae3867a9e5825f3fc52abe"
   solver-name = "gps-cdcl"
   solver-version = 1
